@@ -1,59 +1,121 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# AI Chat Navigator
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+Finding specific information in long AI conversations is frustrating. You remember getting a useful answer three weeks ago but can't remember which conversation it was in or where in that 50-message thread it appeared.
 
-## About Laravel
+This application lets you import your ChatGPT or Claude conversation history, search across all of it, and bookmark specific messages for quick access later. Navigate between bookmarks with keyboard shortcuts, filter by platform or date, and organize conversations with tags.
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+## The Problem
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+AI assistants are verbose. They write walls of text, provide excessive context, and turn straightforward answers into repetitive essays. When you need to reference something from a previous conversation, you're forced to scroll through pages of that verbosity to find the one message that actually mattered.
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+Existing chat interfaces have no way to mark or navigate to important moments within a conversation. This tool adds that missing functionality.
 
-## Learning Laravel
+## What It Does
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework. You can also check out [Laravel Learn](https://laravel.com/learn), where you will be guided through building a modern Laravel application.
+Import your ChatGPT or Claude conversation history, search across everything you've ever discussed with an AI, and bookmark the messages that matter. Filter by platform, date range, or tags. Jump between bookmarks with keyboard shortcuts.
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+The browser extension (coming soon) will inject bookmark icons directly into ChatGPT and Claude's UI, so you can mark messages as you go.
 
-## Laravel Sponsors
+## Tech Stack
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+- **Backend:** Laravel 12, PHP 8.2
+- **Frontend:** React 19, TypeScript, Inertia.js
+- **Styling:** Tailwind CSS 4
+- **Search:** Meilisearch with Laravel Scout
+- **Testing:** Pest (backend), Vitest (frontend)
+- **Database:** SQLite (dev), PostgreSQL (production)
 
-### Premium Partners
+## Features
 
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
+**Current:**
 
-## Contributing
+- Import ChatGPT and Claude conversation exports (JSON)
+- Auto-detect format and parse conversations
+- User authentication with Laravel Breeze
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+**In Progress:**
 
-## Code of Conduct
+- Full-text search with advanced filtering
+- Bookmark management
+- Tag organization
+- Browser extension for live bookmarking
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+**Planned:**
 
-## Security Vulnerabilities
+- Next/previous bookmark navigation
+- Keyboard shortcuts
+- Support for Gemini and Perplexity
+- Export bookmarked snippets
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+## Testing
 
-## License
+The project follows TDD with comprehensive test coverage:
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+- 46 backend tests (Pest)
+- 10 frontend tests (Vitest)
+- Integration tests for external services
+
+Run tests:
+
+```bash
+php artisan test                    # Backend
+npm test -- --run                   # Frontend
+php artisan test --group=integration # Only integration tests
+```
+
+## Installation
+
+```bash
+# Clone and install dependencies
+composer install
+npm install --legacy-peer-deps
+
+# Set up environment
+cp .env.example .env
+php artisan key:generate
+
+# Run migrations
+php artisan migrate
+
+# Start Meilisearch (Docker)
+docker run -d -p 7700:7700 \
+  -v $(pwd)/meili_data:/meili_data \
+  getmeili/meilisearch:latest
+
+# Build frontend assets
+npm run build
+
+# Start development server
+php artisan serve
+```
+
+Visit `http://localhost:8000` and register an account to start importing conversations.
+
+## Project Structure
+
+```
+app/
+├── Http/Controllers/ImportController.php  # File upload handling
+├── Services/Import/                       # Import parsers (adapter pattern)
+│   ├── ChatGPTImporter.php
+│   ├── ClaudeImporter.php
+│   └── ImportService.php
+└── Models/                                # Eloquent models
+    ├── Conversation.php
+    ├── Message.php
+    ├── Bookmark.php
+    └── Tag.php
+
+resources/js/
+└── Pages/
+    └── Import/Index.tsx                   # Import UI
+
+tests/
+├── Feature/                               # HTTP and integration tests
+├── Unit/                                  # Business logic tests
+└── fixtures/                              # Sample JSON exports
+```
+
+## Why This Project
+
+This solves a real problem I encountered: hundreds of AI conversations with valuable information scattered across them, and no efficient way to retrieve it. Building this demonstrates modern full-stack development practices while creating something genuinely useful.
