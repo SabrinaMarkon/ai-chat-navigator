@@ -1,0 +1,86 @@
+[
+  {
+    "title": "Laravel Testing Best Practices",
+    "create_time": 1704067200,
+    "mapping": {
+      "msg_001": {
+        "message": {
+          "content": {
+            "parts": ["What are the best practices for testing in Laravel?"]
+          },
+          "author": {
+            "role": "user"
+          },
+          "create_time": 1704067200
+        }
+      },
+      "msg_002": {
+        "message": {
+          "content": {
+            "parts": [
+              "Here are some Laravel testing best practices:\n\n1. Use Feature tests for HTTP endpoints\n2. Use Unit tests for isolated logic\n3. Use Database transactions to keep tests clean\n4. Mock external services\n5. Use factories for test data"
+            ]
+          },
+          "author": {
+            "role": "assistant"
+          },
+          "create_time": 1704067210
+        }
+      },
+      "msg_003": {
+        "message": {
+          "content": {
+            "parts": ["Can you explain database transactions in tests?"]
+          },
+          "author": {
+            "role": "user"
+          },
+          "create_time": 1704067220
+        }
+      },
+      "msg_004": {
+        "message": {
+          "content": {
+            "parts": [
+              "Database transactions in tests wrap each test in a transaction that gets rolled back after the test completes. This means:\n\n- Each test starts with a clean database state\n- No test data persists between tests\n- Tests run faster (no need to truncate tables)\n\nIn Laravel, you enable this with the RefreshDatabase or DatabaseTransactions trait."
+            ]
+          },
+          "author": {
+            "role": "assistant"
+          },
+          "create_time": 1704067230
+        }
+      }
+    }
+  },
+  {
+    "title": "React 19 New Features",
+    "create_time": 1704153600,
+    "mapping": {
+      "msg_101": {
+        "message": {
+          "content": {
+            "parts": ["What's new in React 19?"]
+          },
+          "author": {
+            "role": "user"
+          },
+          "create_time": 1704153600
+        }
+      },
+      "msg_102": {
+        "message": {
+          "content": {
+            "parts": [
+              "React 19 introduces several exciting features:\n\n1. React Compiler - automatic optimization\n2. Actions - simplified form handling\n3. use() hook for reading promises/context\n4. Improved error handling\n5. Better concurrent rendering"
+            ]
+          },
+          "author": {
+            "role": "assistant"
+          },
+          "create_time": 1704153610
+        }
+      }
+    }
+  }
+]

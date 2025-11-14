@@ -1,0 +1,44 @@
+[
+  {
+    "name": "TypeScript Best Practices",
+    "created_at": "2024-01-15T10:30:00Z",
+    "chat_messages": [
+      {
+        "text": "What are some TypeScript best practices for large projects?",
+        "sender": "human",
+        "created_at": "2024-01-15T10:30:00Z"
+      },
+      {
+        "text": "Here are key TypeScript best practices for large projects:\n\n1. Enable strict mode in tsconfig.json\n2. Use interfaces for object shapes\n3. Avoid 'any' type - use 'unknown' instead\n4. Leverage union types and type guards\n5. Use const assertions for literal types\n6. Organize types in separate .d.ts files\n7. Use generics for reusable components\n8. Enable consistent import sorting",
+        "sender": "assistant",
+        "created_at": "2024-01-15T10:30:15Z"
+      },
+      {
+        "text": "Can you explain when to use interfaces vs types?",
+        "sender": "human",
+        "created_at": "2024-01-15T10:31:00Z"
+      },
+      {
+        "text": "Great question! Here's the difference:\n\n**Use Interfaces when:**\n- Defining object shapes\n- You need declaration merging\n- Building public APIs\n- Working with classes\n\n**Use Types when:**\n- Creating union types (type A = B | C)\n- Creating intersection types\n- Working with primitives or tuples\n- Using mapped types\n\nRule of thumb: Default to interfaces for objects, use types for everything else.",
+        "sender": "assistant",
+        "created_at": "2024-01-15T10:31:20Z"
+      }
+    ]
+  },
+  {
+    "name": "Tailwind CSS 4 Changes",
+    "created_at": "2024-01-20T14:00:00Z",
+    "chat_messages": [
+      {
+        "text": "What changed in Tailwind CSS 4?",
+        "sender": "human",
+        "created_at": "2024-01-20T14:00:00Z"
+      },
+      {
+        "text": "Tailwind CSS 4 is a complete rewrite with major improvements:\n\n1. **Lightning Fast** - 10x faster builds with new Rust-based engine\n2. **CSS-first config** - Configure with CSS variables instead of JS\n3. **Native cascade layers** - Better specificity control\n4. **Simplified installation** - No PostCSS config needed\n5. **Vite plugin** - First-class Vite support\n6. **Zero-config content detection** - Automatically finds template files\n\nIt's a major upgrade focused on performance and developer experience!",
+        "sender": "assistant",
+        "created_at": "2024-01-20T14:00:25Z"
+      }
+    ]
+  }
+]
